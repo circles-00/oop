@@ -37,11 +37,11 @@ int main(void) {
     float x1, y1, x2, y2;
 
     scanf("%f %f", &x1, &y1);
-	scanf("%f %f", &x2, &y2);
+    scanf("%f %f", &x2, &y2);
 	
     tocka2D t1 = { x1, y1 };
-	tocka2D t2 = { x2, y2 };
-	printf("%.2f\n", rastojanie(t1, t2));
+    tocka2D t2 = { x2, y2 };
+    printf("%.2f\n", rastojanie(t1, t2));
     
     float z1, z2;
     scanf("%f %f", &z1, &z2);
