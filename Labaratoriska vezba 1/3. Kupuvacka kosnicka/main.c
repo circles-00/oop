@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-
  typedef struct products {
     char name[50];
     float price;
