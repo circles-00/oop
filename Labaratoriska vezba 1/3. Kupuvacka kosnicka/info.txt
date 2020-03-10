@@ -6,3 +6,9 @@
 2. CocaCola    75.00 x 2 = 150.00
 3. ChokoBanana  5.00 x 10 = 50.00
 Total: 230.00
+
+Test Case:
+3
+Flips 10 3
+CocaCola 75 2
+ChokoBanana 5 10

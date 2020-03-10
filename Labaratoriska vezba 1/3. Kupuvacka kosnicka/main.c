@@ -1,37 +1,39 @@
 #include <stdio.h>
 
-typedef struct proizvodi {
-    char ime[50];
-    float cena;
-    float kolicina;
+
+ typedef struct products {
+    char name[50];
+    float price;
+    float quantity;
 } products;
 
-float suma(float kol, float cena){
-    int suma;
-    suma = kol*cena;
-    return suma;
+
+float subTotal(float quantity, float price){
+    int subTotal;
+    subTotal = quantity*price;
+    return subTotal;
 }
 
 
-void print(char *ime, float *cena, float *kolicina, int i){
-    printf("%d. %s  %.2f x %.1f = %.2f\n", i, ime, *cena, *kolicina, suma(*kolicina,*cena));
+void print(char *name, float *price, float *quantity, int i){
+    printf("%d. %s	%.2f x %.1f = %.2f\n", i, name, *price, *quantity, subTotal(*quantity,*price));
 }
 
 int main(void){
-    proizvodi p[100];
+    products p[100];
     int n;
     float total=0.0;
     scanf("%d", &n);
     
     for(int i=1; i<=n; i++){
-        scanf("%s", p[i].ime);
-        scanf("%f", &p[i].cena);
-        scanf("%f", &p[i].kolicina);
+        scanf("%s", p[i].name);
+        scanf("%f", &p[i].price);
+        scanf("%f", &p[i].quantity);
     }
 
     for(int i=1; i<=n; i++){
-        total+=suma(p[i].kolicina,p[i].cena);
-        print(p[i].ime,&p[i].cena,&p[i].kolicina,i);
+        total+=subTotal(p[i].quantity,p[i].price);
+        print(p[i].name,&p[i].price,&p[i].quantity,i);
     }
     printf("Total: %.2f", total);
 }
