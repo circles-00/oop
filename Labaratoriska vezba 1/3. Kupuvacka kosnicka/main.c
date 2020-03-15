@@ -13,6 +13,10 @@ float subTotal(float quantity, float price){
     return subTotal;
 }
 
+void read(char *name, float *price, float *quantity){
+    scanf("%s %f %f", name, price, quantity);
+}
+
 
 void print(char *name, float *price, float *quantity, int i){
     printf("%d. %s	%.2f x %.1f = %.2f\n", i, name, *price, *quantity, subTotal(*quantity,*price));
@@ -25,9 +29,7 @@ int main(void){
     scanf("%d", &n);
     
     for(int i=1; i<=n; i++){
-        scanf("%s", p[i].name);
-        scanf("%f", &p[i].price);
-        scanf("%f", &p[i].quantity);
+        read(p[i].name,&p[i].price,&p[i].quantity);
     }
 
     for(int i=1; i<=n; i++){
