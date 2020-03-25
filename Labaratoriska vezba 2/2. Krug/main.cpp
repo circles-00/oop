@@ -28,10 +28,10 @@ class Krug {
         const float pi = 3.14;
     public:
         Krug () {
-            rad = 0;
+            this->rad = 0;
         }
         Krug(int radius) {
-            rad = radius;
+            this->rad = radius;
         }
         float perimetar();
         float plostina();
@@ -58,7 +58,7 @@ int main() {
     Krug k(r);
 	cout << k.perimetar() << endl;
 	cout << k.plostina() << endl;
-	cout << k.ednakvi() <<endl;
+	cout << k.ednakvi() << endl;
     //instanciraj objekt od klasata Krug cij radius ne e definiran
 	return 0;
 }

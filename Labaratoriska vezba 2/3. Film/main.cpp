@@ -1,26 +1,21 @@
-/* Филм Problem 3 (0 / 0)
+/*Филм Problem 3 (6 / 7)
 
 Да се дефинира класа Film, во која ќе се чуваат информации за:
 
-    *име низа од 100 знаци
-    *режисер низа од 50 знаци
-    *жанр низа од 50 знаци
-    *година цел број
+    име низа од 100 знаци
+    режисер низа од 50 знаци
+    жанр низа од 50 знаци
+    година цел број
 
 Сите променливи треба да бидат приватни. Соодветно во рамките на класата да се дефинираат:
 
-    *default конструктор и конструктор со аргументи
-    *метод за печатење на информациите за филмот
+    default конструктор и конструктор со аргументи
+    метод за печатење на информациите за филмот
 
 Дополнително да се реализира надворешна функција:
 
-    void pecati_po_godina(Film *f, int n, int godina) која ќе прима аргумент низа од филмови, вкупниот број на филмови и година,
-    а треба да ги отпечати само филмовите кои се направени во дадената година.
-   
-    Ime: Wall-E
-    Reziser: Andrew_Stanton
-    Zanr: Animation
-    Godina: 2008
+    void pecati_po_godina(Film *f, int n, int godina) која ќе прима аргумент низа од филмови, вкупниот број на филмови и година, а треба да ги отпечати само филмовите кои се направени во дадената година.
+
 */
 
 #include <iostream>
@@ -41,10 +36,10 @@ class Film {
         int getyear();
 };
 Film::Film(const char *ime, const char *reziser, const char *zanr, int god) {
-            strcpy(name, ime);
-            strcpy(director, reziser);
-            strcpy(genre, zanr);
-            year = god;
+            strcpy(this->name, ime);
+            strcpy(this->director, reziser);
+            strcpy(this->genre, zanr);
+            this->year = god;
 }
 
 void Film::print() {
@@ -55,7 +50,7 @@ void Film::print() {
 }
 
 int Film::getyear() {
-    return year;
+    return this->year;
 }
 
 void pecati_po_godina(Film *f, int n, int godina){

@@ -1,3 +1,17 @@
+/*Агол Problem 1 (6 / 33)
+
+Да се дефинира класа Agol, во која се чуваат информации за:
+
+    степени, минути и секунди (int)
+
+Во класата да се реализираат:
+
+    конструктор по потреба
+    методи за поставување на вредности на атрибутите на класата (set методи)
+    метод за пресметување на вредноста на аголот во секунди
+
+Да се дефинира и метод за проверување на тоа дали внесениот агол е валиден, односно дали се внесени соодветни вредности за атрибутите (во границите кои ги дозволуваат).
+*/
 #include <iostream>
 using namespace std;
 
@@ -12,24 +26,24 @@ class Agol {
         int to_sekundi();
 };
 
-void Agol::set_stepeni(int degs) {
-            deg=degs;
+void Agol::set_stepeni(int deg) {
+            this->deg=deg;
 }
-void Agol::set_minuti(int mins) {
-            min=mins;
+void Agol::set_minuti(int min) {
+            this->min=min;
 }
-void Agol::set_sekundi(int secs) { 
-            sec=secs;
+void Agol::set_sekundi(int sec) { 
+            this->sec=sec;
 }
 int Agol::getSekundi() {
-            return sec;
+            return this->sec;
 }
 int Agol::to_sekundi() {
             return (deg*60*60) + (min*60) + sec;
 }
 
 bool proveri(int deg, int min, int sec) {
-    if(deg >=0 &&deg < 360 && min >=0 && min < 60 && sec >= 0 && sec < 60)
+    if(deg >=0 &&deg < 360&&min >=0&&min < 60&&sec >= 0 && sec < 60)
         return true;
     else 
         return false;
