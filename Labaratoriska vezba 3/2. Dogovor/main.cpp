@@ -50,6 +50,8 @@ Potpisuvac::Potpisuvac(const Potpisuvac &orig){
 const char * Potpisuvac::getembg() {
             return embg;
 }
+
+//class Dogovor
 class Dogovor
 {
     //vasiot kod ovde
