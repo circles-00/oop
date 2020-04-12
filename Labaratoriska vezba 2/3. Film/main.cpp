@@ -41,7 +41,6 @@ Film::Film(const char *ime, const char *reziser, const char *zanr, int god) {
             strcpy(this->genre, zanr);
             this->year = god;
 }
-
 void Film::print() {
     cout << "Ime: "<< name << endl;
     cout << "Reziser: " << director << endl;
