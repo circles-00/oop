@@ -4,7 +4,6 @@
 using namespace std;
 
 
-fd
 int main() {
     // se testira zadacata modularno
     int testCase;
