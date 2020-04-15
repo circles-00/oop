@@ -34,7 +34,12 @@
     (дополнително барање):float procentNaMemorijaOdZanr(zanr z)- 
     со кој се пресметува процентот на меморијата која ја зафаќаат 
     филмовите од жанр z на DVD-то.
+1
+Terminator 20 0
 
+out
+===== Testiranje na klasata Film ======
+20MB-"Terminator"
 */
 
 #include <iostream>

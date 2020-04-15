@@ -45,6 +45,20 @@
 На крај ќе треба да се испечатат паркираните возила во еден паркинг преку методот pecatiParkiraniVozila() кој исто така треба да биде имплементиран во класата ParkingPlac.
 
 Ориентирајте се според дадениот код во main методот за како се ова треба да го имплементирате.
+
+2
+Cvetan Dimov
+C12 100
+Cvetan Dimov
+C11 80
+2
+C12 2
+C11 1
+
+out
+=========
+C12 Cvetan Dimov - 200 denari
+C11 Cvetan Dimov - 80 denari
 */
 
 #include<iostream>
