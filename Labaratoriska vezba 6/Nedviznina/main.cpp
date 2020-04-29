@@ -32,9 +32,101 @@ class Nedviznina{
         int area;
         int price;
     public:
-        Nedviznina(){}
+        Nedviznina();
+        ~Nedviznina();
+        int cena();
+        void pecati();
+        float danokNaImot();
+        const char * getAdresa();
+        const int getArea();
+        const int getPrice();
+        void setaddress(const char * adresa);
+        void setarea(const int kvadratura);
+        void setprice(const int cena);
+        friend istream & operator >> (istream &input,  Nedviznina &orig){
+            char temp[25];
+            input >> temp;
+            delete [] orig.address;
+            orig.address = new char[strlen(temp)+1];
+            strcpy(orig.address, temp);
+            input >> orig.area >> orig.price;
+
+            return input;
+        }
 };
 
+Nedviznina::Nedviznina(){
+    this->address = new char[0];
+    strcpy(this->address, "");
+    this->area = 0;
+    this-> price = 0;
+}
+Nedviznina::~Nedviznina(){
+    delete [] this->address;
+}
+int Nedviznina::cena(){
+    return this->area * this->price;
+}
+void Nedviznina::pecati(){
+    cout << this->address << ", Kvadratura: " << this->area << ", Cena po Kvadrat: " << this->price << endl;
+}
+float Nedviznina::danokNaImot(){
+    return ((this->area * this->price)*5)/100.0;
+}
+const char * Nedviznina::getAdresa(){
+    return this->address;
+}
+const int Nedviznina::getArea(){
+    return this->area;
+}
+const int Nedviznina::getPrice(){
+    return this->price;
+}
+void Nedviznina::setaddress(const char * adresa){
+    delete [] this->address;
+    this->address = new char[strlen(adresa)+1];
+    strcpy(this->address, adresa);
+}
+void Nedviznina::setarea(const int kvadratura){
+    this->area = kvadratura;
+}
+void Nedviznina::setprice(const int cena){
+    this->price = cena;
+}
+
+class Vila: public Nedviznina{
+    private:
+        int luxurytax;
+    public:
+        Vila();
+        ~Vila();
+        void pecati();
+        float danokNaImot();
+        friend istream & operator >> (istream &input,  Vila &orig){
+            char adresa[25];
+            int area;
+            int cena;
+            input >> adresa >> area >> cena >> orig.luxurytax;
+            orig.setaddress(adresa);
+            orig.setarea(area);
+            orig.setprice(cena);
+
+            return input;
+        }
+};
+
+Vila::Vila(){
+    this->luxurytax = 0;
+}
+Vila::~Vila(){}
+void Vila::pecati(){
+    cout << this->getAdresa() << ", Kvadratura: " << this->getArea() << ", Cena po Kvadrat: " << this->getPrice() << ", Danok na luksuz: " << this->luxurytax << endl;
+}
+float Vila::danokNaImot(){
+    return (((this->getArea() * this->getPrice())*5)/100.0) + (((this->getArea() * this->getPrice())*this->luxurytax)/100.0);
+}
+
+//main
 int main(){
     Nedviznina n;
     Vila v;
