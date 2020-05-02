@@ -143,7 +143,7 @@ class AllStarPlayer : public NBAPlayer{
             strcpy(this->name, orig.name);
             strcpy(this->team, orig.team);
             this->avgPoints = orig.avgPoints;
-            this->avgAllStarJumps = orig.avgAssists;
+            this->avgAssists = orig.avgAssists;
             this->avgJumps = orig.avgJumps;
             this->avgAllStarPoints = orig.avgAllStarPoints;
             this->avgAllStarAssists = orig.avgAllStarAssists;
