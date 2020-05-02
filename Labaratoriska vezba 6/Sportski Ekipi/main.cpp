@@ -36,7 +36,6 @@ class Ekipa{
         void pecati();
         const char * getName();
         const int getWins();
-        const int getLoses();
 };
 
 Ekipa::Ekipa(){
@@ -58,10 +57,6 @@ const char * Ekipa::getName(){
 const int Ekipa::getWins(){
     return this->wins;
 }
-const int Ekipa::getLoses(){
-    return this->loses;
-}
-
 
 class FudbalskaEkipa: public Ekipa{
     private:
