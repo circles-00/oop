@@ -50,7 +50,7 @@ Ekipa::Ekipa(const char * ime, const int pobedi, const int izgubi){
     this->loses = izgubi;
 }
 void Ekipa::pecati(){
-    cout << "Ime: " << this->name << " Pobedi: " << this->wins << " Porazi: " << this->loses << endl;
+    cout << "Ime: " << this->name << " Pobedi: " << this->wins << " Porazi: " << this->loses;
 }
 const char * Ekipa::getName(){
     return this->name;
@@ -85,7 +85,8 @@ FudbalskaEkipa::FudbalskaEkipa(){
     this->draws = 0;
 }
 void FudbalskaEkipa::pecati(){
-    cout << "Ime: " << this->getName() << " Pobedi: " << this->getWins() << " Porazi: " << this->getLoses() << " Nereseni: " << this->draws << " Poeni: " << (this->getWins() * 3) + (this->draws * 1) << endl;
+    Ekipa::pecati();
+    cout << " Nereseni: " << this->draws << " Poeni: " << (this->getWins() * 3) + (this->draws * 1) << endl;
 }
 
 //main
