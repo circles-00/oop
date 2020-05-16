@@ -84,8 +84,6 @@ Input:
 
 using namespace std;
 
-
-//TODO: konstruiraj ja abstraknata klasa Shape
 class Shape{
     protected:
         int strana;
@@ -102,7 +100,6 @@ class Shape{
         virtual const int getType() = 0;
 };
 
-//TODO: konstruiraj ja klasata Kvadrat
 class Square : public Shape{
     public:
         Square(){}
@@ -118,7 +115,7 @@ class Square : public Shape{
             return 1;
         }
 };
-//TODO: konstruiraj ja klasata Krug
+
 class Circle : public Shape{
     public:
         Circle(){}
@@ -134,7 +131,7 @@ class Circle : public Shape{
             return 2;
         }
 };
-//TODO: konstruiraj ja klasata Triagolnik
+
 class Triangle : public Shape{
     public:
         Triangle(){}
@@ -151,7 +148,6 @@ class Triangle : public Shape{
         }
 };
 
-//TODO: definiraj go metodot void checkNumTypes(Shape** niza, int n)
 void checkNumTypes(Shape ** niza, int n){
     int squares = 0; int circles = 0; int triangles = 0;
     for(int i=0; i<n; i++){
@@ -172,16 +168,11 @@ int main(){
 	int n;
 	cin >> n;
 
-	//TODO: inicijaliziraj niza od pokazuvachi kon klasata Shape
     Shape ** niza = new Shape* [n];
-	
-
-	//TODO: alociraj memorija so golemina n za prethodno navedenata niza
 
 	int classType;
 	int side;
 
-	//TODO: konstruiraj for ciklus so chija pomosh ke ja popolnish nizata
 	for(int i = 0; i < n; ++i){
 		cin >> classType;
 		cin >> side;
