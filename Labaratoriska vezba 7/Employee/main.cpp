@@ -97,15 +97,6 @@ class Freelancer  : public Employee{
     private:
         int doneProjects;
         double * money;
-        const void copy(const Freelancer &orig){
-            strcpy(this->name, orig.name);
-            this->age = orig.age;
-            this->exp = orig.exp;
-            this->doneProjects = orig.doneProjects;
-            this->money = new double[this->doneProjects];
-            for(int i=0; i<this->doneProjects; i++)
-                this->money[i] = orig.money[i];
-        }
     public:
         Freelancer (){
             this->doneProjects = 0;
@@ -116,16 +107,6 @@ class Freelancer  : public Employee{
             this->money = new double[this->doneProjects];
             for(int i=0; i<this->doneProjects; i++)
                 this->money[i] = money[i];
-        }
-        Freelancer(const Freelancer &orig){
-            this->copy(orig);
-        }
-        Freelancer &operator=(const Freelancer &orig){
-            if(this != &orig){
-                delete [] this->money;
-                this->copy(orig);
-            }
-            return *this;
         }
         ~Freelancer (){
             delete [] this->money;
@@ -157,12 +138,6 @@ class Company{
         char name[50];
         int noEmployees;
         Employee ** emps;
-        const void copy(const Company &orig){
-            strcpy(this->name, orig.name);
-            this->noEmployees = orig.noEmployees;
-            for(int i=0; i<this->noEmployees; i++)
-                this->emps[i] = orig.emps[i];
-        }
     public:
         Company(){
             strcpy(this->name, "None");
@@ -176,16 +151,6 @@ class Company{
         }
         ~Company(){
             //delete [] this->emps;
-        }
-        Company(const Company &orig){
-            this->copy(orig);
-        }
-        Company &operator=(const Company &orig){
-            if(this != &orig){
-                delete [] this->emps;
-                this->copy(orig);
-            }
-            return *this;
         }
         Company &operator += (Employee * orig){
             Employee ** tmp = new Employee *[this->noEmployees+1];
