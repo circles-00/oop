@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "cstddef": "cpp",
+        "istream": "cpp",
+        "iostream": "cpp",
+        "random": "cpp",
+        "new": "cpp",
+        "cmath": "cpp"
+    }
+}
