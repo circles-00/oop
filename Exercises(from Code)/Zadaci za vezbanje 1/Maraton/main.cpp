@@ -37,62 +37,119 @@ class Ucesnik{
         char * name;
         bool sex;
         int age;
-        void copy(const Ucesnik &orig){
+        const void copy(const Ucesnik &orig){
             this->name = new char[strlen(orig.name)+1];
             strcpy(this->name, orig.name);
             this->sex = orig.sex;
             this->age = orig.age;
         }
     public:
-        Ucesnik();
-        Ucesnik(const char * ime, const bool pol, const int vozrast);
-        Ucesnik(const Ucesnik &orig);
-        ~Ucesnik();
-        bool operator>(const Ucesnik &orig);
-        friend ostream& operator<<(ostream& os, const Ucesnik &orig){
+        Ucesnik(){
+            this->name = new char[0];
+            strcpy(this->name, "");
+            this->sex = false;
+            this->age = 0;
+        }
+        Ucesnik(const char * name, const bool sex, const int age){
+            this->name = new char[strlen(name)+1];
+            strcpy(this->name, name);
+            this->sex = sex;
+            this->age = age;
+        }
+        Ucesnik(const Ucesnik &orig){
+            this->copy(orig);
+        }
+        Ucesnik &operator=(const Ucesnik &orig){
+            if(this != &orig){
+                delete [] this->name;
+                this->copy(orig);
+            }
+            return *this;
+        }
+        ~Ucesnik(){
+            delete [] this->name;
+        }
+        bool operator>(Ucesnik &orig){
+            if(this->age > orig.age)
+                return true;
+            else
+                return false;
+        }
+        friend ostream &operator<<(ostream &os, Ucesnik &orig){
             os << orig.name << endl;
-            os << orig.sex << endl;
+            if(orig.sex)
+                os << "mashki" << endl;
+            else
+                os << "zhenski" << endl;
             os << orig.age << endl;
-
             return os;
         }
+        int getAge(){
+            return this->age;
+        }
 };
-
-Ucesnik::Ucesnik(){
-    this->name = new char[0];
-    strcpy(this->name, "");
-    this->sex = false;
-    this->age = 0;
-}
-Ucesnik::Ucesnik(const char * ime, const bool pol, const int vozrast){
-    this->name = new char[strlen(ime)+1];
-    strcpy(this->name, ime);
-    this->sex = pol;
-    this->age = vozrast;
-}
-Ucesnik::Ucesnik(const Ucesnik &orig){
-    this->copy(orig);
-}
-Ucesnik::~Ucesnik(){
-    delete [] this->name;
-}
-bool Ucesnik::operator>(const Ucesnik &orig){
-    if(this->age < orig.age)
-        return true;
-    else
-        return false;
-}
 
 class Maraton{
     private:
         char location[100];
-        Ucesnik * array;
-        int noUcesnici;
+        Ucesnik * ucs;
+        int noUcs;
+        const void copy(const Maraton &orig){
+            strcpy(this->location, orig.location);
+            this->noUcs = orig.noUcs;
+            for(int i=0; i<this->noUcs; i++)
+                this->ucs[i] = orig.ucs[i];
+        }
     public:
-        Maraton();
-        Maraton(const char * lokacija);
-};
+        Maraton(){
+            strcpy(this->location, "None");
+            this->ucs = new Ucesnik[0];
+            this->noUcs = 0;
+        }
+        Maraton(const char * location){
+            strcpy(this->location, location);
+            this->ucs = new Ucesnik[0];
+            this->noUcs = 0;
+        }
+        Maraton(const Maraton &orig){
+            this->copy(orig);
+        }
+        Maraton &operator=(const Maraton &orig){
+            if(this != &orig){
+                delete [] this->ucs;
+                this->copy(orig);
+            }
+            return *this;
+        }
+        ~Maraton(){
+            delete [] this->ucs;
+        }
+        Maraton &operator +=(const Ucesnik &orig){
+            Ucesnik * tmp;
+            tmp = new Ucesnik[this->noUcs + 1];
+            for(int i=0; i<this->noUcs; i++)
+                tmp[i] = this->ucs[i];
 
+            tmp[this->noUcs++] = orig;
+            delete [] this->ucs;
+            this->ucs = new Ucesnik[this->noUcs + 1];
+            this->ucs = tmp;
+
+            return *this; 
+        }
+        double prosecnoVozrast(){
+            double total = 0.0;
+            for(int i=0; i<this->noUcs; i++)
+                total += this->ucs[i].getAge();
+            return total/this->noUcs;
+        }
+        const void pecatiPomladi(Ucesnik &orig){
+            for(int i=0; i<this->noUcs; i++){
+                if(orig > this->ucs[i])
+                    cout << this->ucs[i];
+            }
+        }
+};
 
 //main
 int main() {
