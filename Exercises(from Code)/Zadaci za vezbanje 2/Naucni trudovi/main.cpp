@@ -6,13 +6,20 @@ using namespace std;
 class Exception{
     private:
         char msg[256];
+        int index;
     public:
         Exception(const char * msg){
             strcpy(this->msg, msg);
         }
+        Exception(const int index){
+            this->index = index;
+        }
         ~Exception(){}
         const void print(){
             cout << this->msg << "\n";
+        }
+        const void indexMsg(){
+            cout << "Ne postoi PhD student so indeks " << this->index << "\n";
         }
 };
 
@@ -105,8 +112,8 @@ class Student{
         ~Student(){
             delete [] this->polozeni;
         }
-        virtual const double rang(){
-            double sum = 0.0;
+        virtual const float rang(){
+            float sum = 0.0;
             for(int i=0; i<this->brojPolozeni; i++)
                 sum += this->polozeni[i];
             return sum / this->brojPolozeni;
@@ -140,17 +147,17 @@ class PhDStudent : public Student{
         }
         PhDStudent(const char * ime, const int index, const int godUpis, const int * polozeni, const int brojPolozeni, Trud * ts, const int brojTs) : Student(ime, index, godUpis, polozeni, brojPolozeni){
             this->ts = new Trud[brojTs + 1];
+            this->brojTs = 0;
             for(int i=0; i<brojTs; i++){
                 try{
                     if(ts[i].getGod() < this->getUpis())
                         throw Exception("Ne moze da se vnese dadeniot trud");
-                    this->ts[i] = ts[i];
+                    this->ts[this->brojTs++] = ts[i];
                 }
                 catch(Exception &ex){
                     ex.print();
                 }       
             }
-            this->brojTs = brojTs;   
         }
         PhDStudent(const PhDStudent &orig) : Student(orig){
             this->copy_obj(orig);
@@ -166,13 +173,13 @@ class PhDStudent : public Student{
         ~PhDStudent(){
             delete [] this->ts;
         }
-        double const rang(){
+        const float rang(){
             int poeni = 0;
             for(int i=0; i<this->brojTs; i++){
                 if(this->ts[i].getVid() == 'c' || this->ts[i].getVid() == 'C')
-                    poeni += ts[i].getC();
-                else if(this->ts[i].getVid() == 'j' || this->ts[i].getVid() == 'J')
-                    poeni += ts[i].getJ();
+                    poeni += Trud::getC();
+                else
+                    poeni += Trud::getJ();
             }
             return Student::rang() + poeni;
         }
@@ -268,15 +275,22 @@ int main(){
 		cin >> t;
         
 		// vmetnete go kodot za dodavanje nov trud so pomos na operatorot +=
+        bool flag = false;
         for(int i=0; i<m; i++){
             PhDStudent *tmp = dynamic_cast<PhDStudent *>(niza[i]);
-            if(tmp && tmp->getIndex() == indeks)
-                try{
-                    *tmp += t;
-                }
-            catch(Exception &ex){
-                ex.print();
+            if(tmp && tmp->getIndex() == indeks){
+                *tmp += t;
+                flag = true;
+                break;
             }
+        }
+
+        try{
+            if(!flag)
+            throw Exception(indeks);
+        }
+        catch(Exception &ex){
+            ex.indexMsg();
         }
 		// pecatenje na site studenti
 		cout << "\nLista na site studenti:\n";
@@ -322,15 +336,27 @@ int main(){
 		cin >> t;
         
 		// vmetnete go kodot za dodavanje nov trud so pomos na operatorot += od Testcase 2
+        bool flag = false;
         for(int i=0; i<m; i++){
-            PhDStudent *tmp = dynamic_cast<PhDStudent *>(niza[i]);
-            if(tmp && tmp->getIndex() == indeks)
-                try{
+            try{
+                PhDStudent *tmp = dynamic_cast<PhDStudent *>(niza[i]);
+                if(tmp && tmp->getIndex() == indeks){
                     *tmp += t;
+                    flag = true;
+                    break;
                 }
+            }
             catch(Exception &ex){
                 ex.print();
             }
+        }
+
+        try{
+            if(!flag)
+            throw Exception(indeks);
+        }
+        catch(Exception &ex){
+            ex.indexMsg();
         }
 
 		// pecatenje na site studenti
@@ -399,12 +425,13 @@ int main(){
             try{
                 PhDStudent *tmp = dynamic_cast<PhDStudent *>(niza[i]);
                 if(tmp && tmp->getIndex() == indeks)
-                        *tmp += t;
+                    *tmp += t;
             }
             catch(Exception &ex){
                 ex.print();
             }
         }
+
 		// pecatenje na site studenti
 		cout << "\nLista na site studenti:\n";
 		for (int i = 0; i < m; i++)
