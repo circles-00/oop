@@ -177,7 +177,7 @@ class Folder{
         }
 };
 
-void max_folder_size(Folder * fdl, int n){
+const void max_folder_size(Folder * fdl, int n){
     int max=fdl[0].folderSize();
     int index = 0;
     for(int i=1; i<n; i++){
