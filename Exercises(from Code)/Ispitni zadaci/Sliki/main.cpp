@@ -91,8 +91,9 @@ class TransparentImage : public Image{
             if(this->isTransparent == true)
                 return this->width * this->height * 4;
             else
-                return this->width * this->height * 3 + this->getTotalPixels() / 8;
+                return this->width * this->height + this->getTotalPixels() / 8;
         }
+
 };
 
 class Folder{
@@ -101,6 +102,14 @@ class Folder{
         char owner[50];
         Image ** img;
         int n;
+        const void copy_obj(const Folder &orig){
+            strcpy(this->name, orig.name);
+            strcpy(this->owner, orig.owner);
+            this->img = new Image*[orig.n + 1];
+            for(int i=0; i<orig.n; i++)
+                this->img[i] = orig.img[i];
+            this->n = orig.n;
+        }
     public:
         Folder(){
             strcpy(this->name, "untitled");
@@ -114,10 +123,15 @@ class Folder{
             this->img = new Image*[0];
             this->n = 0;
         }
-        ~Folder(){
-            delete [] this->img;
-            for(int i=0; i<n; i++)
-                delete [] this->img[i];
+        Folder(const Folder &orig){
+            this->copy_obj(orig);
+        }
+        Folder &operator=(const Folder &orig){
+            if(this != &orig){
+                delete [] this->img;
+                this->copy_obj(orig);
+            }
+            return *this;
         }
         Folder &operator += (Image &orig){
             Image ** tmp = new Image*[this->n + 1];
@@ -128,6 +142,9 @@ class Folder{
             this->img = tmp;
 
             return *this;
+        }
+        ~Folder(){
+            delete [] this->img;
         }
         const int folderSize(){
             int sum=0;
@@ -148,11 +165,11 @@ class Folder{
         }
         
         friend ostream &operator <<(ostream &os, Folder &orig){
-            os << orig.owner << "\n";
+            os << orig.name << " " << orig.owner << "\n";
             os << "--\n";
             for(int i=0; i<orig.n; i++)
                 os << *orig.img[i];
-            os << "--\n" << "Folder Size: " <<orig.folderSize();
+            os << "--\n" << "Folder size: " << orig.folderSize();
             return os;
         }
         Image * &operator[](int i){
@@ -160,16 +177,16 @@ class Folder{
         }
 };
 
-Folder max_folder_size(Folder * fdl, int n){
+void max_folder_size(Folder * fdl, int n){
     int max=fdl[0].folderSize();
-    int index;
+    int index = 0;
     for(int i=1; i<n; i++){
         if(fdl[i].folderSize() > max){
             max = fdl[i].folderSize();
             index = i;
         }
     }
-    return fdl[index];
+    cout << fdl[index];
 }
 
 int main() {
@@ -377,9 +394,11 @@ int main() {
           }
         }
         dir_list[i] = dir;
+        
       }
 
-      cout<<max_folder_size(dir_list, folders_num);
+    max_folder_size(dir_list, folders_num);
+
     }
     return 0;
 };
