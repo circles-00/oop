@@ -8,6 +8,11 @@ class Koncert{
         char location[20];
         static float sale;
         float price;
+        const void copy_obj(const Koncert &orig){
+            strcpy(this->title, orig.title);
+            strcpy(this->location, orig.location);
+            this->price = orig.price;
+        }
     public:
         Koncert(){
             strcpy(this->title, "Uknown");
@@ -18,6 +23,14 @@ class Koncert{
             strcpy(this->title, title);
             strcpy(this->location, location);
             this->price = price;
+        }
+        Koncert(const Koncert &orig){
+            this->copy_obj(orig);
+        }
+        Koncert &operator=(const Koncert &orig){
+            if(this != &orig)
+                this->copy_obj(orig);
+            return *this;
         }
         static void setSezonskiPopust(const float newSale){
             sale = newSale;
@@ -43,6 +56,12 @@ class ElektronskiKoncert : public Koncert{
         char * DJ;
         float length;
         bool time;
+        const void copy_obj(const ElektronskiKoncert &orig){
+            this->DJ = new char[strlen(orig.DJ)+1];
+            strcpy(this->DJ, orig.DJ);
+            this->length = orig.length;
+            this->time = orig.time;
+        }
     public:
         ElektronskiKoncert(){
             this->DJ = new char[0];
@@ -55,9 +74,23 @@ class ElektronskiKoncert : public Koncert{
             this->length = length;
             this->time = time;
         }
+        ElektronskiKoncert(const ElektronskiKoncert &orig) : Koncert(orig){
+            this->copy_obj(orig);
+        }
+        ElektronskiKoncert &operator=(const ElektronskiKoncert &orig){
+            if(this != &orig){
+                delete [] this->DJ;
+                Koncert::operator=(orig);
+                this->copy_obj(orig);
+            }
+            return *this;
+        }
+        ~ElektronskiKoncert(){
+            delete [] this->DJ;
+        }
         const float cena(){
             float price = Koncert::cena();
-            if(this->length > 5)
+            if(this->length > 5 && this->length < 7)
                 price += 150;
             else if(this->length > 7)
                 price += 360;
@@ -67,9 +100,6 @@ class ElektronskiKoncert : public Koncert{
                 price += 100;
 
             return price;
-        }
-        ~ElektronskiKoncert(){
-            delete [] this->DJ;
         }
 };
 
@@ -90,7 +120,7 @@ class ElektronskiKoncert : public Koncert{
      cout << "Elektronski koncerti: " << count << " od vkupno " << n << "\n";
  }
 
- bool prebarajKoncert(Koncert ** koncerti, int n, char * naziv, bool elektronski){
+ bool prebarajKoncert(Koncert ** koncerti, int n, const char * naziv, bool elektronski){
     if(elektronski == true){    
         for(int i=0; i<n; i++){
             ElektronskiKoncert *tmp = dynamic_cast <ElektronskiKoncert *>(koncerti[i]);
@@ -177,7 +207,7 @@ int main(){
 
         }
         else if (tip==8){//smeni cena
-        	  Koncert ** koncerti = new Koncert *[5];
+        	Koncert ** koncerti = new Koncert *[5];
             int n;
             koncerti[0] = new Koncert("Area","BorisTrajkovski",350);
             koncerti[1] = new ElektronskiKoncert("TomorrowLand","Belgium",8000,"Afrojack",7.5,false);
